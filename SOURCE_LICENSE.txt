@@ -1,0 +1,11 @@
+Model Information:
+* title:	Templar Knight (rigged, game-ready)
+* source:	https://sketchfab.com/3d-models/templar-knight-rigged-game-ready-e57edad1bb8e4dbd8573f85695ceecde
+* author:	everlasting17th (https://sketchfab.com/everlastinggrey)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Templar Knight (rigged, game-ready)" (https://sketchfab.com/3d-models/templar-knight-rigged-game-ready-e57edad1bb8e4dbd8573f85695ceecde) by everlasting17th (https://sketchfab.com/everlastinggrey) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

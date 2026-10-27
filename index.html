@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111820">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="description" content="Private-development mobile 3D model audition of the Ash & Stone soldier source.">
+  <title>Ash & Stone | Soldier Audition Lab</title>
+  <link rel="preload" href="assets/model-viewer.min.js" as="script" crossorigin>
+  <style>
+    :root { --bg:#10151a; --panel:#1c242a; --panel2:#242c30; --line:#3b4649; --ink:#eee5d6; --muted:#9fa9a9; --gold:#c6a06b; --hi:#e1c298; --cyan:#87aab6; }
+    * {box-sizing:border-box}
+    html {scroll-behavior:smooth;background:var(--bg)}
+    body {margin:0;color:var(--ink);background:linear-gradient(180deg,#131c23 0,#10151a 600px);font:15px/1.48 system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden}
+    button{font:inherit;touch-action:manipulation}
+    button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+    .shell{width:min(1280px,100%);margin-inline:auto}
+    .mast{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #4c4944;padding:13px 20px;background:linear-gradient(95deg,#25313a,#151c23)}
+    .mark{font:700 clamp(23px,3.5vw,35px)/1.1 Georgia,serif;letter-spacing:.085em;color:#e7dcc9;white-space:nowrap}
+    .tagline{font:500 10px/1.3 system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+    .right-id{text-transform:uppercase;letter-spacing:.13em;font-weight:650;font-size:11px;color:#bac0bd;text-align:right}
+    .intro{padding:19px 20px 11px}
+    .eyebrow{font-size:11px;color:var(--gold);font-weight:750;letter-spacing:.18em;text-transform:uppercase}
+    h1{font:600 clamp(25px,5vw,37px)/1.22 Georgia,serif;margin:7px 0 9px}
+    .lead{margin:0;color:var(--muted);max-width:800px}
+    .mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 20px 10px}
+    .pill{border:1px solid #516067;background:#263038;color:#d7dfda;padding:12px 8px;border-radius:7px;font-size:14px;font-weight:650}
+    .pill.active{background:#685237;border-color:#c19e68;color:#fff7e7;box-shadow:inset 0 0 0 1px #a88656}
+    .viewer-shell{position:relative;margin:0 20px;border:1px solid #485354;border-radius:10px;overflow:hidden;background:#20292c}
+    model-viewer{height:clamp(380px,63vh,760px);width:100%;display:block;--poster-color:transparent;background:radial-gradient(ellipse at 52% 38%,#526166 0,#303d41 37%,#171f23 88%);touch-action:pan-y}
+    .viewer-top{position:absolute;top:12px;left:12px;display:flex;gap:7px;flex-wrap:wrap;z-index:1;pointer-events:none}
+    .top-chip{color:#ece7db;border:1px solid #657278;background:#162027d9;border-radius:4px;padding:6px 9px;font-size:11px;font-weight:700;letter-spacing:.06em}
+    .viewer-loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#142029e9;color:#e7d3af;border:1px solid #806749;padding:9px 16px;border-radius:5px;font-size:12px;pointer-events:none}
+    .viewer-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#20292e;padding:10px 13px;color:#c3cbc9;font-size:12px;border-top:1px solid #3c484d}
+    .dot{width:8px;height:8px;background:#86b8b1;display:inline-block;border-radius:50%;margin-right:6px}
+    .controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:12px 20px 7px}
+    .control{padding:12px 5px;background:#2a343b;border:1px solid #48565d;border-radius:7px;color:#e7e4dc;font-size:13px;font-weight:650;cursor:pointer}
+    .control:active,.control.active{border-color:#bd9c71;background:#685640}
+    .info-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:15px 20px}
+    .info-card{border:1px solid #3b464a;background:#20282d;border-radius:6px;text-align:center;padding:12px 6px}
+    .info-card strong{display:block;color:#e7d5b5;font-size:18px}.info-card span{font-size:10px;color:#acb6b4;text-transform:uppercase;letter-spacing:.09em}
+    .section{padding:16px 20px 5px}
+    h2{font:600 clamp(23px,3.7vw,30px)/1.25 Georgia,serif;color:#e2c89c;margin:6px 0 8px}
+    .caption{color:#aeb9b9;font-size:13px;margin:7px 0 17px}
+    .viewtabs{display:flex;gap:7px;overflow:auto;scrollbar-width:none;padding:0 20px 12px}
+    .viewtabs button{flex:none;padding:9px 13px;color:#ddd5c8;background:#28333a;border:1px solid #536167;border-radius:6px;white-space:nowrap}
+    .viewtabs button[aria-pressed=true]{background:#6b5639;border-color:#b99a69}
+    .compare{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:0 20px}
+    .shot{margin:0;border:1px solid #455158;border-radius:6px;overflow:hidden;background:#171f24}
+    .shot img{display:block;width:100%;aspect-ratio:16/9;object-fit:contain}
+    .shot figcaption{padding:9px 11px;font-size:12px;color:#ddd7cc;display:flex;justify-content:space-between;gap:10px}
+    .shot figcaption span{color:#aab6ba}
+    .notice{margin:20px;border-left:3px solid var(--gold);background:#222b31;padding:14px 17px;color:#d3d3cd;font-size:13px}
+    .notice strong{color:#e6cc9a}
+    footer{margin:25px 20px 0;padding:19px 0 35px;color:#929fa2;border-top:1px solid #38464d;font-size:12px}
+    a{color:#d8b883}
+    @media(max-width:680px){.right-id{font-size:9px}.mast{padding:12px 14px}.intro{padding-inline:16px}.mode{margin-inline:12px}.viewer-shell{margin-inline:0;border-radius:0;border-inline:0}model-viewer{height:min(66vh,650px);min-height:390px}.viewer-foot{font-size:11px}.controls{padding-inline:9px}.control{font-size:12px}.info-row{margin-inline:10px}.compare{grid-template-columns:1fr;padding:0 12px}.shot{margin-bottom:2px}.section{padding-inline:16px}.viewtabs{padding-inline:12px}.notice{margin-inline:12px}}
+    @media(max-height:470px) and (orientation:landscape){model-viewer{height:78vh;min-height:290px}.intro{padding-top:10px}.mode{margin-top:8px}.viewer-top{top:5px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+  <script type="module" src="assets/model-viewer.min.js"></script>
+</head>
+<body>
+<div class="shell">
+  <header class="mast">
+    <div><div class="mark">ASH &amp; STONE</div><div class="tagline">Nothing Stands Forever</div></div>
+    <div class="right-id">Soldier Quality Lab<br>Mobile Audition · V1</div>
+  </header>
+  <section class="intro"><div class="eyebrow">Actual licensed 3D source, not a rendered mockup</div>
+    <h1>Crusader Soldier Audition</h1>
+    <p class="lead">Drag to orbit around the model. Pinch to zoom. Switch between the original Templar and our cape-free Ash &amp; Stone adaptation.</p>
+  </section>
+  <div class="mode" role="group" aria-label="Character appearance">
+    <button class="pill active" id="modifiedButton" type="button" aria-pressed="true">Ash &amp; Stone · No Cape</button>
+    <button class="pill" id="originalButton" type="button" aria-pressed="false">Original · With Cape</button>
+  </div>
+  <section class="viewer-shell" aria-label="Interactive three dimensional character viewer">
+    <div class="viewer-top"><span class="top-chip">ACTUAL 3D MODEL</span><span class="top-chip" id="versionLabel">ASH &amp; STONE VARIANT</span></div>
+    <model-viewer id="soldier" alt="Realistic medieval Crusader soldier model, editable Ash and Stone audition" src="assets/ashstone.glb" camera-controls auto-rotate rotation-per-second="12deg" shadow-intensity="0.9" shadow-softness="0.9" exposure="1.1" tone-mapping="aces" interaction-prompt="none" loading="eager" camera-orbit="26deg 75deg auto" min-camera-orbit="auto 12deg auto" max-camera-orbit="auto 168deg auto" field-of-view="30deg" min-field-of-view="12deg" max-field-of-view="55deg">
+      <div slot="poster" class="viewer-loading">Loading real 3D soldier…</div>
+    </model-viewer>
+    <div class="viewer-foot"><span><span class="dot"></span><span id="loadState">Loading the model…</span></span><span>Drag · Pinch · Scroll</span></div>
+  </section>
+  <div class="controls" aria-label="Camera tools">
+    <button id="frontView" class="control" type="button">Front view</button>
+    <button id="sideView" class="control" type="button">Side view</button>
+    <button id="rearView" class="control" type="button">Back view</button>
+    <button id="spinToggle" class="control active" type="button" aria-pressed="true">Pause spin</button>
+  </div>
+  <div class="info-row">
+    <div class="info-card"><strong id="triangleCount">25,563</strong><span>Triangles</span></div>
+    <div class="info-card"><strong>1.78 m</strong><span>Unity audition height</span></div>
+    <div class="info-card"><strong>CC BY</strong><span>Commercial reuse + credit</span></div>
+  </div>
+  <section class="section" id="comparison"><div class="eyebrow">Captured from our actual Unity Soldier Lab</div><h2>Beside the Castle</h2>
+    <p class="caption">These are real Unity captures at the same audition scale, not concept art. Choose a camera to compare the same viewpoint of both versions.</p>
+  </section>
+  <div class="viewtabs" role="group" aria-label="Unity camera comparison">
+    <button type="button" aria-pressed="true" data-view="0">Front close-up</button>
+    <button type="button" aria-pressed="false" data-view="1">Castle scale</button>
+    <button type="button" aria-pressed="false" data-view="2">Battle distance</button>
+    <button type="button" aria-pressed="false" data-view="3">Alternative angle</button>
+  </div>
+  <div class="compare">
+    <figure class="shot"><img id="modifiedShot" loading="lazy" width="1280" height="720" alt="Ash and Stone modified cape-free soldier beside the actual Unity castle" src="assets/modified-1.jpg"><figcaption><b>Ash &amp; Stone variant</b><span>No cape / fortress</span></figcaption></figure>
+    <figure class="shot"><img id="originalShot" loading="lazy" width="1280" height="720" alt="Original Crusader soldier beside the actual Unity castle" src="assets/original-1.jpg"><figcaption><b>Original Templar</b><span>Cape / red crosses</span></figcaption></figure>
+  </div>
+  <div class="notice"><strong>Development audition, not an approved game asset.</strong> The cape removal, heraldry and correct PBR textures are included. Animation retargeting is not yet approved, so the 3D model uses a fixed pose with camera rotation. The final coat of arms and mobile gameplay performance still need assessment.</div>
+  <footer>3D source: <a href="https://sketchfab.com/3d-models/templar-knight-rigged-game-ready-e57edad1bb8e4dbd8573f85695ceecde" target="_blank" rel="noopener">Templar Knight (rigged, game-ready)</a> by <a href="https://sketchfab.com/everlastinggrey" target="_blank" rel="noopener">everlasting17th</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. Model has been adapted for Ash &amp; Stone, including cape removal, heraldry and PBR conversion. Not a production game build.<br>© Ash &amp; Stone development preview. Nothing Stands Forever.</footer>
+</div>
+<script>
+(()=>{
+  const viewer=document.getElementById("soldier");
+  const states={original:{src:"assets/original.glb",label:"ORIGINAL TEMPLAR",tri:"26,135"},modified:{src:"assets/ashstone.glb",label:"ASH & STONE VARIANT",tri:"25,563"}};
+  const buttons={modified:document.getElementById("modifiedButton"),original:document.getElementById("originalButton")};
+  const loadState=document.getElementById("loadState"),label=document.getElementById("versionLabel");
+  let current="modified",spin=true;
+  function setVariant(next){
+    if(current!==next){current=next;loadState.textContent="Loading "+next+" model…";viewer.src=states[next].src;}
+    buttons.modified.classList.toggle("active",next==="modified");
+    buttons.original.classList.toggle("active",next==="original");
+    buttons.modified.setAttribute("aria-pressed",String(next==="modified"));
+    buttons.original.setAttribute("aria-pressed",String(next==="original"));
+    label.textContent=states[next].label;
+    document.getElementById("triangleCount").textContent=states[next].tri;
+  }
+  buttons.modified.addEventListener("click",()=>setVariant("modified"));
+  buttons.original.addEventListener("click",()=>setVariant("original"));
+  viewer.addEventListener("load",()=>{loadState.textContent="Real 3D model loaded";});
+  viewer.addEventListener("error",()=>{loadState.textContent="Unable to load 3D model. Try refreshing.";});
+  function pose(azimuth,polar){viewer.autoRotate=false;spin=false;syncSpin();viewer.cameraOrbit=azimuth+"deg "+polar+"deg auto";viewer.jumpCameraToGoal();}
+  document.getElementById("frontView").addEventListener("click",()=>pose("0","75"));
+  document.getElementById("sideView").addEventListener("click",()=>pose("90","75"));
+  document.getElementById("rearView").addEventListener("click",()=>pose("180","75"));
+  const spinButton=document.getElementById("spinToggle");
+  function syncSpin(){spinButton.classList.toggle("active",spin);spinButton.setAttribute("aria-pressed",String(spin));spinButton.textContent=spin?"Pause spin":"Resume spin";}
+  spinButton.addEventListener("click",()=>{spin=!spin;viewer.autoRotate=spin;syncSpin();});
+  const shotViews=["1","2","3","4"];
+  document.querySelectorAll(".viewtabs button").forEach(button=>button.addEventListener("click",()=>{
+    const view=shotViews[Number(button.dataset.view)];
+    document.querySelectorAll(".viewtabs button").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
+    document.getElementById("originalShot").src="assets/original-"+view+".jpg";
+    document.getElementById("modifiedShot").src="assets/modified-"+view+".jpg";
+  }));
+})();
+</script>
+</body></html>
